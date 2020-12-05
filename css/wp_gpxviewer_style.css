@@ -36,3 +36,7 @@
    }
    
    .gpxpluga {display: none;}
+
+   .leaflet-marker-icon {
+     width: 21px; height: 31px;
+   }
