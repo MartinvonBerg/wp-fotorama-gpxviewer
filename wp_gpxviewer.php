@@ -169,10 +169,14 @@ function show_gpxview($attr, $content = null)
 	}
 	// check if customsort is possible, if yes sort ascending
 	$rowsum = $imageNumber * ($imageNumber + 1) / 2;
-	$csort = array_column($data2, 'sort'); // $customsort
-	$arraysum = array_sum($csort);
-	if ( ($rowsum != $arraysum) or $ignoresort) {
-		$csort = array_column($data2, 'datesort');
+
+	if ($imageNumber > 0) {
+		$csort = array_column($data2, 'sort'); // $customsort
+		$arraysum = array_sum($csort);
+	
+		if ( ($rowsum != $arraysum) or $ignoresort) {
+			$csort = array_column($data2, 'datesort');
+		}
 	}
 	
 	// sort images asending date-taken
@@ -247,6 +251,7 @@ function show_gpxview($attr, $content = null)
 			// get the image srcset if the image is in WP-Media-Catalog, otherwise not.
 			// Code-Example with thumbs with image srcset (https://github.com/artpolikarpov/fotorama/pull/337)
 			// <a href="img/large.jpg" srcset="img/large.jpg 1920w, img/medium.jpg 960w, img/little.jpg 480w"> <img src="img/thumb.jpg">
+			$srcset = '';
 			if ( $data['wpid'] > 0) {
 				$srcset = wp_get_attachment_image_srcset( $data['wpid'] );
 				$srcset = str_replace('http', 'img/http', $srcset);
