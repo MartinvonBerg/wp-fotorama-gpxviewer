@@ -74,20 +74,23 @@
             }
         });
 
+    /*    
     jQuery(window).load(function ()
     {
     var i = setInterval(function ()
     {
         clearInterval(i);
         // safe to execute your code here
-        jQuery("#map_headmap0 > button").css("background","lightgray");
-        jQuery("#map_headmap0 > button").append('Alles anzeigen ');
+        //jQuery("#map_headmap0 > button").css("background","lightgray");
+        //jQuery("#map_headmap0 > button").css("width","16px");
+        //jQuery("#map_headmap0 > button").css("height","16px");
+        //jQuery("#map_headmap0 > button").append('Alles anzeigen ');
         /*
         jQuery(".JBinfofenster").css("top",'');
         jQuery(".JBinfofenster").css("left",'');
         jQuery(".JBinfofenster").css("bottom",'20px');
         jQuery(".JBinfofenster").css("right",'10px');
         */
-    }, 100); });	
+   //}, 100); }); 	
         
 })(window, document);

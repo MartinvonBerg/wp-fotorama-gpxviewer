@@ -2,17 +2,17 @@
 
 /**
  *
- * @link              www.mvb1.de/info/wordpress-plugins/
+ * @link              https://github.com/MartinvonBerg/wp-fotorama-gpxviewer
  * @since             0.10.0
  * @package           wp_fotorama_gpxviewer
  *
  * @wordpress-plugin
  * Plugin Name:       Fotorama-Slider + Openstreetmap 
- * Plugin URI:        www.mvb1.de/info/wordpress-plugins/
+ * Plugin URI:        https://github.com/MartinvonBerg/wp-fotorama-gpxviewer
  * Description:       Shows an Image-Slider with Thumbnails. Under the Slider an Openstreetmap is shown with Icons at images GPS-position. Additionally a GPX-Track including its height chart is shown.
  * Version:           0.10.0
  * Author:            Martin von Berg
- * Author URI:        www.mvb1.de
+ * Author URI:        https://www.mvb1.de/info/ueber-mich/
  * License:           GPL-2.0
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
