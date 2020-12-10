@@ -1211,8 +1211,8 @@ function getDataFromHtml ($el) {
     // Martin SEO
     alt    = $child.attr('alt'), 
     title  = $child.attr('title');
-    if (!alt) {alt = $child.context.alt;}
-    if (!title) {title = $child.context.title;}
+    if (!alt) {alt=''}   // {alt = $child.context.alt;}
+    if (!title) {title = ''} //{title = $child.context.title;}
 
     if (alt)   { $.extend(imgData, { alt: alt }); }
     if (title) { $.extend(imgData, { title: title }); }
