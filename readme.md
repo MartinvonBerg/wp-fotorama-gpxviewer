@@ -1,4 +1,3 @@
-# Does not work with WP 5.6! Try to fix it soon!
 # Description 
 
 This is a Wordpress-Plugin to show a responsive image-slider with thumbnails (based on fotorama). The images are taken from a folder in the Wordpress upload-directory (uploaded via FTP). Under the image-slider an OpenStreetMap is shown. This map shows the GPX-position of the images and additionally a GPX-Track that was recorded during the excursion (based on GPXViewer). The map moves synchronously to the slider, e.g. it is centered to the GPS-Position of the current image. Under the map a height-chart of the GPX-track shown. Its track-data is shown on the map on mouse-over.
