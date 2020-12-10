@@ -1,6 +1,6 @@
 # Description 
 
-This is a Wordpress-Plugin to show a responsive image-slider with thumbnails (based on fotorama). The images are taken from a folder in the Wordpress upload-directory (uploaded via FTP). Under the image-slider an OpenStreetMap is shown. This map shows the GPX-position of the images and additionally a GPX-Track that was recorded during the excursion (based on GPXViewer). The map moves synchronously to the slider, e.g. it is centered to the GPS-Position of the current image. Under the map a height-chart of the GPX-track shown. Its track-data is shown on the map on mouse-over.
+This is a Wordpress-Plugin to show a responsive image-slider with thumbnails (based on fotorama). The images are taken from a folder in the Wordpress upload-directory (uploaded via FTP). Under the image-slider an OpenStreetMap is shown. This map shows the GPX-position of the images and additionally a GPX-Track that was recorded during the excursion (based on GPXViewer). The map moves synchronously to the slider, e.g. it is centered to the GPS-Position of the current image. Under the map a height-chart of the GPX-track shown. Its track-data is shown on the map on mouse-over. 
 
 The Plugin is fully responsive and SEO-friendly. It adds the images of the slider to the Yoast-XML-Sitemap and sets the alt-tag of the images (but not for the thumbnails). It is possible to use either the image-slider or the map with height-chart alone.
 
@@ -8,7 +8,7 @@ Although the images are expected in a folder of the Wordpress upload-directory t
 
 The Plugin sets additionally the custom-fields 'lon' and 'lat' of the post. This are the longitude and latitude of the first image or track-point. This coordinates are used by another plugin from me to show all posts on a map. See here: https://github.com/MartinvonBerg/wp_post_map_view_simple .
 
-This plugin does not provide an Admin-Panel for its settings or the specific settings for a post. As well it has no interface to act as a Gutenberg-Block. I needed some help for that. 
+This plugin does not provide an Admin-Panel for its settings or the specific settings for a post. As well it has no interface to act as a Gutenberg-Block. I needed some help for that. **It runs with Wordpress 5.6**
 
 
 # Usage
@@ -203,9 +203,15 @@ Yet another release: 4.12.2020
 - read-out of WP-Media-Catalog added for img srcset, meta-data, exif-data etc.
 - options for custom-fields and yoast-xml added
 
+= 0.10.1 =
+
+Yet another release: 10.12.2020
+- Update for WP 5.6: deactivated useless alt and title in fotorama2.js for SEO
+- Test with live site on www.mvb1.de
+
 # Upgrade Notice 
 
-See at Update-Section
+## Upgrade for Wordpress 5.6 is highly recommended!
 
 # Screenshots
 
