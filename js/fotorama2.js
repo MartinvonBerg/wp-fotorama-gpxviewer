@@ -2451,7 +2451,10 @@ jQuery.Fotorama = function ($fotorama, opts) {
             .addClass(imgClass + (fullFLAG ? ' ' + imgFullClass : ''))
             .prependTo($frame);
 
-        fit($img, ($.isFunction(specialMeasures) ? specialMeasures() : specialMeasures) || measures, method || dataFrame.fit || opts.fit, position || dataFrame.position || opts.position);
+        // Martin: for jQuery update
+        let checkfunc = false;
+        checkfunc = typeof specialMeasures === "function";
+        fit($img, (checkfunc ? specialMeasures() : specialMeasures) || measures, method || dataFrame.fit || opts.fit, position || dataFrame.position || opts.position);
 
         $.Fotorama.cache[src] = frameData.state = 'loaded';
 
@@ -3508,6 +3511,19 @@ jQuery.Fotorama = function ($fotorama, opts) {
       thumbsDraw(newPos);
     }
   });
+
+  // hover replacement
+  //}).on('mouseenter', function() { //make sure both scrollbars will stay visible if one scrollbar is hovered if autoHide is "scroll".
+  //if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove) {
+  //    _scrollbarsAutoHideFlagScrollAndHovered = true;
+  //    refreshScrollbarsAutoHide(true);
+  //}
+  //}).on('mouseleave', function() {
+  //if (_scrollbarsAutoHideScroll || _scrollbarsAutoHideMove) {
+  //    _scrollbarsAutoHideFlagScrollAndHovered = false;
+  //    refreshScrollbarsAutoHide(false);
+  //}
+  //});
 
   $wrap.hover(
       function () {
