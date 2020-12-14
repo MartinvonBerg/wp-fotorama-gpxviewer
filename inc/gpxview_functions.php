@@ -1,4 +1,5 @@
 <?php
+namespace mvbplugins\fotoramagpxviewer;
 
 /**
  * Get the upload URL/path in right way (works with SSL).

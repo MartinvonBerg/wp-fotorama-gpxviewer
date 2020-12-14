@@ -3,37 +3,38 @@
 /**
  *
  * @link              https://github.com/MartinvonBerg/wp-fotorama-gpxviewer
- * @since             0.10.1
+ * @since             0.11.0
  * @package           wp_fotorama_gpxviewer
  *
  * @wordpress-plugin
  * Plugin Name:       Fotorama-Slider + Openstreetmap 
  * Plugin URI:        https://github.com/MartinvonBerg/wp-fotorama-gpxviewer
  * Description:       Shows an Image-Slider with Thumbnails. Under the Slider an Openstreetmap is shown with Icons at images GPS-position. Additionally a GPX-Track including its height chart is shown.
- * Version:           0.10.1
+ * Version:           0.11.0
  * Author:            Martin von Berg
  * Author URI:        https://www.mvb1.de/info/ueber-mich/
  * License:           GPL-2.0
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
+namespace mvbplugins\fotoramagpxviewer;
 
 // fallback for wordpress security
 defined('ABSPATH') || die('Are you ok?');
 
 // load globals and functions for status transitions only if needed or intended
-define('setCustomFields' , true);
+const setCustomFields = true;
 if (setCustomFields) {
 	require_once __DIR__ . '/inc/stateTransitions.php';
 }
 
 // load the wpseo_sitemap_url-images callback to add images of post to the sitemap only if needed or intended
-define('doYoastXmlSitemap' , true);
+const doYoastXmlSitemap = true;
 if (doYoastXmlSitemap) {
 	require_once __DIR__ . '/inc/yoastXmlSitemap.php';
 }
 
 // define the shortcode to generate the image-slider with map
-add_shortcode('gpxview', 'show_gpxview');
+add_shortcode('gpxview', '\mvbplugins\fotoramagpxviewer\show_gpxview');
 
 // this is the function that runs if the post is rendered an the shortcode is found in the page. Somehow the main-function
 function show_gpxview($attr, $content = null)
@@ -86,6 +87,9 @@ function show_gpxview($attr, $content = null)
 	$gpx_url = $up_url . '/' . $gpxpath . '/';    // gpx_url
 	$imagepath = $up_dir . '/' . $imgpath;        // path to the images
 	$imageurl = $up_url . '/' . $imgpath;         // url to the images-url in uploads directory
+	$thumbheight = (string) get_option('thumbnail_size_h');
+	$thumbwidth = (string) get_option('thumbnail_size_w');
+	$thumbcheck = '-' . $thumbwidth . 'x' . $thumbheight . '.jpg';
 	
 	// Loop through all jpg-files in the given folder, and get the required data
 	$imageNumber = 0;
@@ -102,8 +106,8 @@ function show_gpxview($attr, $content = null)
 			$thumbavail = true;
 			$pathtocheck = $imagepath . '/' . $jpgfile;
 			
-			if     ( is_file($pathtocheck . '-150x150.jpg') ) {
-				$thumbs = '-150x150.jpg';
+			if     ( is_file($pathtocheck . $thumbcheck) ) {
+				$thumbs = $thumbcheck;
 				}
 			elseif ( is_file($pathtocheck . '-thumb.jpg') ) {
 				$thumbs = '-thumb.jpg';
@@ -121,8 +125,8 @@ function show_gpxview($attr, $content = null)
 			$thumbinsubdir = true;
 			$pathtocheck = $imagepath . '/' . $thumbsdir . '/'. $jpgfile;
 			
-			if     ( is_file($pathtocheck . '-150x150.jpg') ) {
-				$thumbs = '-150x150.jpg';
+			if     ( is_file($pathtocheck . $thumbcheck) ) {
+				$thumbs = $thumbcheck;
 				}
 			elseif ( is_file($pathtocheck . '-thumb.jpg') ) {
 				$thumbs = '-thumb.jpg';

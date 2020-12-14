@@ -65,7 +65,7 @@ See under https://www.mvb1.de/info/wordpress-plugins/
 1. Preparation of Images (optional)
 
     - Generate Thubnails and rescale your Images.
-    I used "ImageResizer for Windows" rescaled the former full-size images and generated thumbnails. The Thumbnails have to have '_thumb', '-thumb' or '150x150' in their filename (e.g. image1-thumb.jpg). The minimum size should be 64 x 64px. Best is 150 x 150px.
+    I used "ImageResizer for Windows" rescaled the former full-size images and generated thumbnails. The Thumbnails have to have '_thumb', '-thumb', '200x150' or '150x150' in their filename (e.g. image1-thumb.jpg). The minimum size should be 64 x 64px. Best is 150 x 150px.
     Optionally you can store the Thumbnails to a subfolder './thumbs' but that is not required.
     If you do not provide thumbnails the full-scaled images will be used. This will increase load time.
     
@@ -73,7 +73,7 @@ See under https://www.mvb1.de/info/wordpress-plugins/
     - Upload the images from Step 1 to your Wordpress site e.g. with Filezilla. Upload to a Sub-Folder in 
 ./wp-content/uploads/. Do not use the WP-standard folders, like ./wp-content/uploads/2020/12!
         - Example:  ./wp-content/uploads/All_Albums/gallery1
-    - Do not use 'thumb' or something like '4x5' or 150x150 (regex: [0-9]x[0-9]) in the filename for the full-size image. These files will be regarded as thumbnails and therefore ignored for the slider.
+    - Do not use 'thumb' or something like '4x5' or 200x150 or 150x150 (regex: [0-9]x[0-9]) in the filename for the full-size image. These files will be regarded as thumbnails and therefore ignored for the slider.
     - Up to now the images are NOT shown in the Media-Catalog of Wordpress
     - Note for Lightroom-Users: I also wrote a Lightroom-Plugin to upload the images directly to the Wordpress-Catalog and do the whole process in one Click! All image-work, updates, change of title, development can be done in Lightroom and the same image with unchanged Wordpress-ID is updated. The images in the Plugin are updated automatically. 
     - Example-Folder
@@ -208,6 +208,18 @@ Yet another release: 4.12.2020
 Yet another release: 10.12.2020
 - Update for WP 5.6: deactivated useless alt and title in fotorama2.js for SEO
 - Test with live site on www.mvb1.de
+
+= 0.10.2 =
+
+Yet another release: 13.12.2020
+- Thumbnail size 200x150 added
+
+= 0.11.0 =
+
+Yet another release: 13.12.2020
+- made Thumbnail size variable, depeinding on the admin setting for thumbnails
+- introduced namespace for wordpress plugin compatiblity
+
 
 # Upgrade Notice 
 

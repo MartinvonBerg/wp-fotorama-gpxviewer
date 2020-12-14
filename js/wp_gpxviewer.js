@@ -45,15 +45,6 @@
     if(pars.type == "Tracks_n") {  // <-------------------------------------- ff
         var infofenster = JB.Infofenster(map.map);
         infofenster.content(pars.gpxdaten.tracks.track[0].info);
-        //infofenster.show();
-        //var infodata = infofenster.fenstercontainer.childNodes[2].data.split(/[\s:]+/); 
-        /*strecke = setscale(infodata[1]);
-        scale = parseFloat(infodata[1])/30;
-        
-        if (scale<1.0) {
-            scale = 1.0; // entspricht 500m Strich
-        };
-        */
         return;
     }
     return true;
@@ -73,24 +64,5 @@
                 makemap.Rescale(images[nr].coord.lat,images[nr].coord.lon,g_maprescale); // <-------------------------------------
             }
         });
-
-    /*    
-    jQuery(window).load(function ()
-    {
-    var i = setInterval(function ()
-    {
-        clearInterval(i);
-        // safe to execute your code here
-        //jQuery("#map_headmap0 > button").css("background","lightgray");
-        //jQuery("#map_headmap0 > button").css("width","16px");
-        //jQuery("#map_headmap0 > button").css("height","16px");
-        //jQuery("#map_headmap0 > button").append('Alles anzeigen ');
-        /*
-        jQuery(".JBinfofenster").css("top",'');
-        jQuery(".JBinfofenster").css("left",'');
-        jQuery(".JBinfofenster").css("bottom",'20px');
-        jQuery(".JBinfofenster").css("right",'10px');
-        */
-   //}, 100); }); 	
         
 })(window, document);

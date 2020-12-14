@@ -1,5 +1,7 @@
 <?php
-add_action('wp_enqueue_scripts', 'wp_gpxviewer_scripts');
+namespace mvbplugins\fotoramagpxviewer;
+
+add_action('wp_enqueue_scripts', '\mvbplugins\fotoramagpxviewer\wp_gpxviewer_scripts');
 
 function wp_gpxviewer_scripts()
 {
