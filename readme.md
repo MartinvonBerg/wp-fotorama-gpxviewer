@@ -10,19 +10,13 @@ The Plugin sets additionally the custom-fields 'lon' and 'lat' of the post. This
 
 This plugin does not provide an Admin-Panel for its settings or the specific settings for a post. As well it has no interface to act as a Gutenberg-Block. I needed some help for that. **It runs with Wordpress 5.6**
 
-</br>
 
 # Donate
 If you like this plugin buy me a coffee or a beer:
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=59LH5AHNQ8XZW)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CQA6XZ7LUMBJQ)
 
-<form action="https://www.paypal.com/donate" method="post" target="_top">
-<input type="hidden" name="hosted_button_id" value="59LH5AHNQ8XZW" />
-<input type="image" src="https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="Donate me a beer!" alt="Donate with PayPal button" />
-<img alt="" border="0" src="https://www.paypal.com/en_DE/i/scr/pixel.gif" width="1" height="1" />
-</form>
-</br>
+</br>    
 
 # Usage
 
