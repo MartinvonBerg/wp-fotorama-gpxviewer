@@ -223,9 +223,15 @@ Yet another release: 13.12.2020
 
 = 0.11.0 =
 
-Yet another release: 13.12.2020
+Yet another release: 20.12.2020
 - made Thumbnail size variable, depeinding on the admin setting for thumbnails
 - introduced namespace for wordpress plugin compatiblity
+
+= 0.12.0 =
+
+Yet another release: 28.12.2020
+- add the adress of the starting point (in german) and store it in a custom-field to reduce load time
+- added further shortcode parameters for the adress. PHP improvement to avoid errors
 
 
 # Upgrade Notice 

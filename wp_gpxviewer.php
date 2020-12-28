@@ -10,7 +10,7 @@
  * Plugin Name:       Fotorama-Slider + Openstreetmap 
  * Plugin URI:        https://github.com/MartinvonBerg/wp-fotorama-gpxviewer
  * Description:       Shows an Image-Slider with Thumbnails. Under the Slider an Openstreetmap is shown with Icons at images GPS-position. Additionally a GPX-Track including its height chart is shown.
- * Version:           0.11.0
+ * Version:           0.12.0
  * Author:            Martin von Berg
  * Author URI:        https://www.mvb1.de/info/ueber-mich/
  * License:           GPL-2.0
@@ -63,6 +63,8 @@ function show_gpxview($attr, $content = null)
 		'alttext' => '',
 		'scale' => 1.0, // map-scale factor for GPXViewer
 		'ignoresort' => false, // ignore custom sort even if provided by Wordpress, then sort by date ascending
+		'showadress' => true,
+		'adresstext' => 'Startadresse',
 	), $attr));
 
 	// Detect Language of Website and set the Javascript-Variable for the Language used in GPXViewer
@@ -149,7 +151,7 @@ function show_gpxview($attr, $content = null)
 			else {
 				// Check if file with GPS-Coordinate is maybe in WP-Media-Catalog 
 				$wpimgurl = $imageurl . '/' . $jpgfile . '.jpg';
-				$wpid = attachment_url_to_postid($wpimgurl);
+				$wpid = attachment_url_to_postid($wpimgurl); // PHP: braucht sehr lange!
 	
 				// get Exif-Data-Values from $Exif and $iptc and store it to array data2
 				list($exptime, $apperture, $iso, $focal, $camera, $datetaken, $datesort, $tags, $description, $title, $alt, $caption, $sort) = gpxview_getEXIFData($Exif, $imagepath . "/" . basename($file), $imageNumber, $wpid);
@@ -221,14 +223,39 @@ function show_gpxview($attr, $content = null)
 			if ($i == 0) {
 				$gpxfile .= $f;
 
-				// Set Custom-Field 'lat' and 'lon' in the Post with first trackpoint of the GPX-track
-				if ($draft_2_pub and setCustomFields) { 
+				if ($draft_2_pub and setCustomFields) {
+					// Set Custom-Field 'lat' and 'lon' in the Post with first trackpoint of the GPX-track
 					$gpxdata = simplexml_load_file($gpx_url . $f);
-					$lat = (string) $gpxdata->trk->trkseg->trkpt[0]['lat'];
-					if (strlen($lat)<1) {$lat = (string) $gpxdata->trk->trkpt[0]['lat'];}
-					$lon = (string) $gpxdata->trk->trkseg->trkpt[0]['lon']; 
-					if (strlen($lon)<1) {$lon = (string) $gpxdata->trk->trkpt[0]['lon'];}
-					gpxview_setpostgps($postid, $lat, $lon);			
+					if (isset( $gpxdata->trk->trkseg->trkpt[0]['lat'] )) {
+						$lat = (string) $gpxdata->trk->trkseg->trkpt[0]['lat']; 
+					} else {
+						$lat = (string) $gpxdata->trk->trkpt[0]['lat'];
+					}
+					if (isset( $gpxdata->trk->trkseg->trkpt[0]['lon'] )) {
+						$lon = (string) $gpxdata->trk->trkseg->trkpt[0]['lon']; 
+					} else {
+						$lon = (string) $gpxdata->trk->trkpt[0]['lon'];
+					}
+					
+					gpxview_setpostgps($postid, $lat, $lon);
+
+					// get the adress of the GPS-starting point, source: https://nominatim.org/release-docs/develop/api/Reverse/
+					// only done for the first track
+					if ($showadress) {
+						$url = 'https://nominatim.openstreetmap.org/reverse?lat=' . $lat . '&lon='. $lon . '&format=json&zoom=10&accept-language=de';
+						$opts = array(
+							'http'=>array(
+							'method'=>"GET",
+							'header'=>'User-Agent: PostmanRuntime/7.26.8' // just any user-agent to fake a human access
+							)
+						);
+						$context = stream_context_create($opts);
+						$geojson = json_decode(file_get_contents( $url , false, $context ));
+						$geoadress = (array) $geojson->address;
+						$geoadressfield = maybe_serialize($geoadress);
+						delete_post_meta($postid,'geoadress');
+						update_post_meta($postid,'geoadress', $geoadressfield,'');
+					}								
 				}
 
 			} else {
@@ -318,6 +345,32 @@ function show_gpxview($attr, $content = null)
 	// provide GPX-download if defined
 	if (($dload == 'yes') && ($i == 1)) {
 		$htmlstring .= '<p><strong>GPX-Datei: <a download="' . $gpxfile . '" href="' . $gpx_url . $gpxfile . '">Download GPX-Datei</a></strong></p>';
+	}
+
+	// produce starting point description
+	if ($showadress) {
+		$geoadresstest =  get_post_meta($postid,'geoadress');
+		if ( ! empty($geoadresstest) ) {
+			$test = $geoadresstest[0]; // we need only the first index
+			$geoadress = maybe_unserialize($test);	// type conversion to array
+			$htmlstring .= '<h4>'. $adresstext .'</h4>';
+			$v = array_key_exists('village', $geoadress) ? $geoadress['village'] . ', ' : ''; // city // array_key_exists ist veraltet! Use isset() or property_exists() instead
+			$v = array_key_exists('city', $geoadress) ? $geoadress['city'] . ', ' : ''; // city
+			$m = array_key_exists('municipality', $geoadress) ? $geoadress['municipality'] . ', ' : '';
+			$c = array_key_exists('county', $geoadress) ? $geoadress['county'] . ', ' : '';
+			$s = array_key_exists('state', $geoadress) ? $geoadress['state'] . ', ' : '';
+			$cy = array_key_exists('country', $geoadress) ? $geoadress['country'] : '';
+
+			// https://www.google.com/maps/search/?api=1&query=47.5951518,-122.3316393
+			//https://www.google.com/maps/search/@?api=1&map_action=map&center=44.757601666667,6.7916916666667&zoom=12
+			//https://www.google.com/maps/       @?api=1&map_action=map&center=-33.712206,150.311941&zoom=12&basemap=terrain
+
+			$lat = get_post_meta($postid,'lat');
+			$lon = get_post_meta($postid,'lon');
+			$googleurl = 'https://www.google.com/maps/@?api=1&map_action=map&center=' . $lat[0] . ',' . $lon[0] . '&zoom=10';
+			$v2 = '<a href="' .$googleurl. '" target="_blank">'. $v .'</a>';
+			$htmlstring .= '<p>'. $v2 . $m . $c . $s . $cy . '</p>';
+		}
 	}
 	
 	// provide javascript-variables for GPXviewer. There are better solutions, but it works
